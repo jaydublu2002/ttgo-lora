@@ -1,3 +1,5 @@
+Various PlatformIO projects exploring TTGO LoRa boards.
+
 # References
 
 ## Hardware
@@ -54,3 +56,16 @@
 
 - [TinGPS++](https://github.com/mikalhart/TinyGPSPlus)
 - [documentation](http://arduiniana.org/libraries/tinygpsplus/)
+
+### Videos
+
+- [#149 ESP32 Deep Sleep, RTC Memory, "Secret" LoLin Pins](https://youtu.be/r75MrWIVIw4)
+- [#172 Hidden: ESP32 and ESP8266 point-to-point (ESP-Now): Fast and efficient. Comparison with LoRa](https://youtu.be/6NsBN42B80Q)
+- [#188 Antenna Tutorial incl. cheap DIY Antenna Tester (LoRa, ESP32)](https://youtu.be/J3PBL9oLPX8)
+- [#224 Are these boards ok? New LoRa boards tested (mainly TTGO ESP32)](https://youtu.be/cjVwTf8iDFY)
+- [#252 ESP32 Ultra Low Power (ULP) core made easy in the Arduino IDE including 100$ challenge](https://youtu.be/-QIcUTBB7Ww)
+- [#264 PlatformIO for Arduino, ESP8266, and ESP32 Tutorial](https://youtu.be/0poh_2rBq7E)
+- [#328 ESP32 Secrets: Interrupts, and Deep-Sleep under the Hood](https://youtu.be/CJhWlfkf-5M)
+- [#337 LoRa Mesh Communication without Infrastructure: The Meshtastic Project (ESP32, BLE, GPS)](https://youtu.be/TY6m6fS8bxU)
+- [Which ESP32 pins are safe to use?](https://youtu.be/LY-1DHTxRAk)
+- [ESP32 Pins.xlsx](https://drive.google.com/file/d/1gbKM7DA7PI7s1-ne_VomcjOrb0bE2TPZ/view)

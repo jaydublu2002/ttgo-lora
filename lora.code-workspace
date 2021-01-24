@@ -2,6 +2,10 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"name": "OLED_LoRa_Sender",
+			"path": "LoRa32/OLED_LoRa_Sender"
 		}
 	],
 	"settings": {}
