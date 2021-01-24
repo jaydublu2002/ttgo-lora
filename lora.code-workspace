@@ -4,12 +4,16 @@
 			"path": "."
 		},
 		{
-			"name": "OLED_LoRa_Sender",
+			"name": "LoRa32/OLED_LoRa_Sender",
 			"path": "LoRa32/OLED_LoRa_Sender"
 		},
 		{
-			"name": "OLED_LoRa_Receive",
+			"name": "LoRa32/OLED_LoRa_Receive",
 			"path": "LoRa32/OLED_LoRa_Receive"
+		},
+		{
+			"name": "T-Beam/OLED_LoRa_Sender",
+			"path": "T-Beam/OLED_LoRa_Sender"
 		}
 	],
 	"settings": {}

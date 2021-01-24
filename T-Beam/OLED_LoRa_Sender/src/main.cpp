@@ -1,7 +1,7 @@
 /**
  * Derived from
  * https://github.com/LilyGO/TTGO-LORA32/blob/master/OLED_LoRa_Receive/OLED_LoRa_Receive.ino
- * with OLED pins amended to suit LORA32 v1.0
+ * with OLED pins amended to suit TTGO T-Beam V1.1
  */
 
 #include <Arduino.h>
@@ -12,58 +12,43 @@
 #include "images.h"
 
 #define SCK     5    // GPIO5  -- SX1278's SCK
-#define MISO    19   // GPIO19 -- SX1278's MISO
+#define MISO    19   // GPIO19 -- SX1278's MISnO
 #define MOSI    27   // GPIO27 -- SX1278's MOSI
 #define SS      18   // GPIO18 -- SX1278's CS
 #define RST     14   // GPIO14 -- SX1278's RESET
 #define DI0     26   // GPIO26 -- SX1278's IRQ(Interrupt Request)
-#define BAND    868E6
+#define BAND  868E6
 
-SSD1306 display(0x3c, 4, 15);
+unsigned int counter = 0;
+
+SSD1306 display(0x3c, 21, 22);
 String rssi = "RSSI --";
 String packSize = "--";
 String packet ;
 
-
-void loraData(){
-  display.clear();
-  display.setTextAlignment(TEXT_ALIGN_LEFT);
-  display.setFont(ArialMT_Plain_10);
-  display.drawString(0 , 15 , "Received "+ packSize + " bytes");
-  display.drawStringMaxWidth(0 , 26 , 128, packet);
-  display.drawString(0, 0, rssi); 
-  display.display();
-  Serial.print(rssi);
-  Serial.print(" - ");
-  Serial.println(packet);
-}
-
-void cbk(int packetSize) {
-  packet ="";
-  packSize = String(packetSize,DEC);
-  for (int i = 0; i < packetSize; i++) { packet += (char) LoRa.read(); }
-  rssi = "RSSI " + String(LoRa.packetRssi(), DEC) ;
-  loraData();
-}
+ 
 
 void setup() {
   pinMode(16,OUTPUT);
+  pinMode(2,OUTPUT);
+  
   digitalWrite(16, LOW);    // set GPIO16 low to reset OLED
   delay(50); 
-  digitalWrite(16, HIGH); // while OLED is running, must set GPIO16 in high、
+  digitalWrite(16, HIGH); // while OLED is running, must set GPIO16 in high
   
   Serial.begin(115200);
   while (!Serial);
   Serial.println();
-  Serial.println("LoRa Receiver Callback");
+  Serial.println("LoRa Sender Test");
+  
   SPI.begin(SCK,MISO,MOSI,SS);
-  LoRa.setPins(SS,RST,DI0);  
+  LoRa.setPins(SS,RST,DI0);
   if (!LoRa.begin(868E6)) {
     Serial.println("Starting LoRa failed!");
     while (1);
   }
   //LoRa.onReceive(cbk);
-  LoRa.receive();
+//  LoRa.receive();
   Serial.println("init ok");
   display.init();
   display.flipScreenVertically();  
@@ -73,7 +58,24 @@ void setup() {
 }
 
 void loop() {
-  int packetSize = LoRa.parsePacket();
-  if (packetSize) { cbk(packetSize);  }
-  delay(10);
+  display.clear();
+  display.setTextAlignment(TEXT_ALIGN_LEFT);
+  display.setFont(ArialMT_Plain_10);
+  
+  display.drawString(0, 0, "Sending packet: ");
+  display.drawString(90, 0, String(counter));
+  Serial.println(String(counter));
+  display.display();
+
+  // send packet
+  LoRa.beginPacket();
+  LoRa.print("hello ");
+  LoRa.print(counter);
+  LoRa.endPacket();
+
+  counter++;
+  digitalWrite(2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(2, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
 }
