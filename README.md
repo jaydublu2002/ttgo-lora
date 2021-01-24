@@ -27,7 +27,10 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 
 - ESP32 Rev1
 - NEO-6M GPS Module
-- TP5400 Battery management (or AXP192?)
+- TP5400 Battery management (or AXP192? 
+  - <http://www.x-powers.com/en.php/Info/product_detail/article_id/29>
+  - <https://github.com/lewisxhe/AXP202X_Library>
+  - <https://github.com/luckynrslevin/TTGO-T-Beam-Blinking/blob/master/TTGO-T-Beam-Blinking.ino>) 
 - CP2104-GMR USB interface
 - SSD1306 0.96 inch 128X64  OLED
 - 4MB PSRAM

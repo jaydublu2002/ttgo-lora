@@ -2,14 +2,16 @@
  * Derived from
  * https://github.com/LilyGO/TTGO-LORA32/blob/master/OLED_LoRa_Receive/OLED_LoRa_Receive.ino
  * with OLED pins amended to suit TTGO T-Beam V1.1
+ * 
+ * Combined with https://github.com/LilyGO/TTGO-T-Beam/blob/master/GPS/GPS.ino
  */
 
 #include <Arduino.h>
-#include <SPI.h>
 #include <LoRa.h>
+#include <SPI.h>
+#include <SSD1306.h> 
+#include <TinyGPS++.h> 
 #include <Wire.h>  
-#include "SSD1306.h" 
-#include "images.h"
 
 #define SCK     5    // GPIO5  -- SX1278's SCK
 #define MISO    19   // GPIO19 -- SX1278's MISnO
@@ -25,8 +27,18 @@ SSD1306 display(0x3c, 21, 22);
 String rssi = "RSSI --";
 String packSize = "--";
 String packet ;
+TinyGPSPlus gps;                            
+HardwareSerial SerialGPS(1);  
 
- 
+static void smartDelay(unsigned long ms)                
+{
+  unsigned long start = millis();
+  do
+  {
+    while (SerialGPS.available())
+      gps.encode(SerialGPS.read());
+  } while (millis() - start < ms);
+}
 
 void setup() {
   pinMode(16,OUTPUT);
@@ -41,6 +53,8 @@ void setup() {
   while (!Serial);
   Serial.println();
   Serial.println("LoRa Sender Test");
+
+  SerialGPS.begin(9600, SERIAL_8N1, 34, 12);   //17-TX 18-RX
   
   SPI.begin(SCK,MISO,MOSI,SS);
   LoRa.setPins(SS,RST,DI0);
@@ -59,6 +73,29 @@ void setup() {
 }
 
 void loop() {
+
+  Serial.print("Latitude  : ");
+  Serial.println(gps.location.lat(), 5);
+  Serial.print("Longitude : ");
+  Serial.println(gps.location.lng(), 4);
+  Serial.print("Satellites: ");
+  Serial.println(gps.satellites.value());
+  Serial.print("Altitude  : ");
+  Serial.print(gps.altitude.feet() / 3.2808);
+  Serial.println("M");
+  Serial.print("Time      : ");
+  Serial.print(gps.time.hour());
+  Serial.print(":");
+  Serial.print(gps.time.minute());
+  Serial.print(":");
+  Serial.println(gps.time.second());
+  Serial.println("**********************");
+
+  smartDelay(1000);                                      
+
+  if (millis() > 5000 && gps.charsProcessed() < 10)
+    Serial.println(F("No GPS data received: check wiring"));
+
   display.clear();
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.setFont(ArialMT_Plain_10);
@@ -70,8 +107,11 @@ void loop() {
 
   // send packet
   LoRa.beginPacket();
-  LoRa.print("hello ");
   LoRa.print(counter);
+  LoRa.print(" - ");
+  LoRa.print(gps.location.lat());
+  LoRa.print(",");
+  LoRa.print(gps.location.lng());
   LoRa.endPacket();
 
   counter++;
