@@ -6,6 +6,10 @@
 		{
 			"name": "OLED_LoRa_Sender",
 			"path": "LoRa32/OLED_LoRa_Sender"
+		},
+		{
+			"name": "OLED_LoRa_Receive",
+			"path": "LoRa32/OLED_LoRa_Receive"
 		}
 	],
 	"settings": {}
