@@ -12,12 +12,12 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 - SX1276 LoRa chip
 - TP4054 Battery management
 - CP2102 USB interface
-- SSD1306 0.96 inch 128X64  OLED
+- SSD1306 0.96 inch 128X64 OLED
 - 32MB flash
 - User LED = IO25
 
-+ <https://github.com/LilyGO/TTGO-LORA32>
-+ [Schematic](https://github.com/Xinyuan-LilyGO/LilyGO-T-Beam/blob/master/schematic/T3_V1.3.pdf)
+* <https://github.com/LilyGO/TTGO-LORA32>
+* [Schematic](https://github.com/Xinyuan-LilyGO/LilyGO-T-Beam/blob/master/schematic/T3_V1.3.pdf)
 
 #### TTGO LoRa T-Beam v1.1
 
@@ -25,15 +25,14 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 - NEO-6M GPS Module
 - [AXP192](http://www.x-powers.com/en.php/Info/product_detail/article_id/29) Battery management
 - CP2104-GMR USB interface
-- SSD1306 0.96 inch 128X64  OLED
+- SSD1306 0.96 inch 128X64 OLED
 - 4MB PSRAM
 - 4MB Flash
 - No user LED (but possibility to [repurpose AXP Charging LED](https://github.com/luckynrslevin/TTGO-T-Beam-Blinking/blob/master/TTGO-T-Beam-Blinking.ino))
 
-
-+ [Product page](http://www.lilygo.cn/claprod_view.aspx?TypeId=62&Id=1281&FId=t28:62:28)
-+ <https://github.com/LilyGO/TTGO-T-Beam>
-+ [Schematic](https://github.com/LilyGO/TTGO-T-Beam/blob/master/t22_gps_v07(1).pdf)
+* [Product page](http://www.lilygo.cn/claprod_view.aspx?TypeId=62&Id=1281&FId=t28:62:28)
+* <https://github.com/LilyGO/TTGO-T-Beam>
+* [Schematic](<https://github.com/LilyGO/TTGO-T-Beam/blob/master/t22_gps_v07(1).pdf>)
 
 ### Libraries
 
@@ -59,7 +58,7 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 
 #### AXP Battery Management
 
-  - <https://github.com/lewisxhe/AXP202X_Library>
+- <https://github.com/lewisxhe/AXP202X_Library>
 
 ## Demos & other inspiration
 
