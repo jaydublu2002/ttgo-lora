@@ -2,8 +2,9 @@
  * Derived from
  * https://github.com/LilyGO/TTGO-LORA32/blob/master/OLED_LoRa_Receive/OLED_LoRa_Receive.ino
  * with OLED & GPS pins amended to suit TTGO T-Beam V1.1
- * 
+ *
  * Combined with https://github.com/LilyGO/TTGO-T-Beam/blob/master/GPS/GPS.ino
+ * And a bit of https://github.com/lewisxhe/AXP202X_Library
  */
 
 #include <Arduino.h>
@@ -26,6 +27,7 @@ const uint8_t i2c_sda = 21;
 const uint8_t i2c_scl = 22;
 
 unsigned int counter = 0;
+char buffer[50];
 
 AXP20X_Class axp;
 SSD1306 display(0x3c, i2c_sda, i2c_scl);
@@ -47,14 +49,13 @@ static void smartDelay(unsigned long ms)
 
 void setup()
 {
+  // Initialise & reset OLED
   pinMode(16, OUTPUT);
-  // T-Beam doesn't have a user LED?
-  // pinMode(14,OUTPUT);
-
-  digitalWrite(16, LOW); // set GPIO16 low to reset OLED
+  digitalWrite(16, LOW);
   delay(50);
-  digitalWrite(16, HIGH); // while OLED is running, must set GPIO16 in high
+  digitalWrite(16, HIGH);
 
+  // Initialise serial
   Serial.begin(115200);
   while (!Serial)
     ;
@@ -63,8 +64,8 @@ void setup()
 
   Wire.begin(i2c_sda, i2c_scl);
 
+  // Initialise AXP battery management
   int ret = axp.begin(Wire, AXP192_SLAVE_ADDRESS);
-
   if (ret == AXP_FAIL)
   {
     Serial.println("AXP Power begin failed");
@@ -72,8 +73,10 @@ void setup()
       ;
   }
 
-  SerialGPS.begin(9600, SERIAL_8N1, 34, 12); //17-TX 18-RX
+  // Initialise GPS
+  SerialGPS.begin(9600, SERIAL_8N1, 34, 12);
 
+  // Initialise LoRa
   SPI.begin(SCK, MISO, MOSI, SS);
   LoRa.setPins(SS, RST, DI0);
   if (!LoRa.begin(868E6))
@@ -82,11 +85,12 @@ void setup()
     while (1)
       ;
   }
-  //LoRa.onReceive(cbk);
-  //  LoRa.receive();
+
   Serial.println("init ok");
+
   display.init();
   display.flipScreenVertically();
+  display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.setFont(ArialMT_Plain_10);
 
   delay(1500);
@@ -94,54 +98,30 @@ void setup()
 
 void loop()
 {
+  smartDelay(5000);
 
-  Serial.print("Latitude  : ");
-  Serial.println(gps.location.lat(), 5);
-  Serial.print("Longitude : ");
-  Serial.println(gps.location.lng(), 4);
-  Serial.print("Satellites: ");
-  Serial.println(gps.satellites.value());
-  Serial.print("Altitude  : ");
-  Serial.print(gps.altitude.feet() / 3.2808);
-  Serial.println("M");
-  Serial.print("Time      : ");
-  Serial.print(gps.time.hour());
-  Serial.print(":");
-  Serial.print(gps.time.minute());
-  Serial.print(":");
-  Serial.println(gps.time.second());
-  Serial.println("**********************");
-
-  Serial.print("Battery: ");
-  Serial.print(String(axp.getBattVoltage()) + " mv");
-  Serial.print(axp.isChargeing() ? " - Charging" : " - CHARGED");
-  Serial.print("\r\n");
-
-  smartDelay(1000);
+  sprintf(buffer, "%06d,%4.2f,%08.4f,%08.4f,%02d:%02d:%02d",
+          counter,
+          axp.getBattVoltage() / 1000,
+          gps.location.lat(),
+          gps.location.lng(),
+          gps.time.hour(),
+          gps.time.minute(),
+          gps.time.second());
 
   if (millis() > 5000 && gps.charsProcessed() < 10)
     Serial.println(F("No GPS data received: check wiring"));
 
   display.clear();
-  display.setTextAlignment(TEXT_ALIGN_LEFT);
-  display.setFont(ArialMT_Plain_10);
-
-  display.drawString(0, 0, "Sending packet: ");
-  display.drawString(90, 0, String(counter));
+  display.drawString(0, 0, buffer);
   display.display();
 
-  Serial.println(String(counter));
+  Serial.println(buffer);
 
-  // send packet
   LoRa.beginPacket();
-  LoRa.print(counter);
-  LoRa.print(" - ");
-  LoRa.print(gps.location.lat());
-  LoRa.print(",");
-  LoRa.print(gps.location.lng());
+  LoRa.print(buffer);
   LoRa.endPacket();
 
-  counter++;
-
-  delay(2000);
+  if (counter++ == 1000000)
+    counter = 0;
 }
