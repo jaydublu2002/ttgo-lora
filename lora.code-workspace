@@ -18,6 +18,10 @@
 		{
 			"name": "T-Beam/OLED_LoRa_Sender_GPS",
 			"path": "T-Beam/OLED_LoRa_Sender_GPS"
+		},
+		{
+			"name": "T-Beam/SSD1306UIDemo",
+			"path": "T-Beam/SSD1306UIDemo"
 		}
 	],
 	"settings": {}
