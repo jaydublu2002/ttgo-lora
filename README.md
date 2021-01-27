@@ -6,40 +6,34 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 
 ### Hardware
 
-#### LilyGO LoRa Series
-
-- <https://github.com/Xinyuan-LilyGO/LilyGO-T-Beam> - lots of exapmles and links to datasheets etc.
-
 #### TTGO LoRa32
 
 - ESP32
 - SX1276 LoRa chip
 - TP4054 Battery management
 - CP2102 USB interface
-- SSD1306 0.96 inch 128X64  OLED
+- SSD1306 0.96 inch 128X64 OLED
 - 32MB flash
 - User LED = IO25
 
-- <https://github.com/LilyGO/TTGO-LORA32>
-- [Schematic](https://github.com/Xinyuan-LilyGO/LilyGO-T-Beam/blob/master/schematic/T3_V1.3.pdf)
+* <https://github.com/LilyGO/TTGO-LORA32>
+* [Schematic](https://github.com/Xinyuan-LilyGO/LilyGO-T-Beam/blob/master/schematic/T3_V1.3.pdf)
 
 #### TTGO LoRa T-Beam v1.1
 
 - ESP32 Rev1
 - NEO-6M GPS Module
-- TP5400 Battery management (or AXP192? 
-  - <http://www.x-powers.com/en.php/Info/product_detail/article_id/29>
-  - <https://github.com/lewisxhe/AXP202X_Library>
-  - <https://github.com/luckynrslevin/TTGO-T-Beam-Blinking/blob/master/TTGO-T-Beam-Blinking.ino>) 
+- [AXP192](http://www.x-powers.com/en.php/Info/product_detail/article_id/29) Battery management
 - CP2104-GMR USB interface
-- SSD1306 0.96 inch 128X64  OLED
+- SSD1306 0.96 inch 128X64 OLED
 - 4MB PSRAM
 - 4MB Flash
+- No user LED (but possibility to [repurpose AXP Charging LED](https://github.com/luckynrslevin/TTGO-T-Beam-Blinking/blob/master/TTGO-T-Beam-Blinking.ino))
 
-- [Product page](http://www.lilygo.cn/claprod_view.aspx?TypeId=62&Id=1281&FId=t28:62:28)
-- <https://github.com/LilyGO/TTGO-T-Beam>
-- [Schematic](https://github.com/LilyGO/TTGO-T-Beam/blob/master/t22_gps_v07(1).pdf)
-  
+* [Product page](http://www.lilygo.cn/claprod_view.aspx?TypeId=62&Id=1281&FId=t28:62:28)
+* <https://github.com/LilyGO/TTGO-T-Beam>
+* [Schematic](<https://github.com/LilyGO/TTGO-T-Beam/blob/master/t22_gps_v07(1).pdf>)
+
 ### Libraries
 
 #### ESP32
@@ -62,7 +56,15 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 - [TinGPS++](https://github.com/mikalhart/TinyGPSPlus)
 - [documentation](http://arduiniana.org/libraries/tinygpsplus/)
 
-#### Videos
+#### AXP Battery Management
+
+- <https://github.com/lewisxhe/AXP202X_Library>
+
+## Demos & other inspiration
+
+- <https://github.com/Xinyuan-LilyGO/LilyGO-T-Beam> - lots of exapmles and links to datasheets etc.
+
+## Videos
 
 - [#149 ESP32 Deep Sleep, RTC Memory, "Secret" LoLin Pins](https://youtu.be/r75MrWIVIw4)
 - [#172 Hidden: ESP32 and ESP8266 point-to-point (ESP-Now): Fast and efficient. Comparison with LoRa](https://youtu.be/6NsBN42B80Q)
@@ -74,4 +76,3 @@ Various PlatformIO projects exploring TTGO LoRa boards.
 - [#337 LoRa Mesh Communication without Infrastructure: The Meshtastic Project (ESP32, BLE, GPS)](https://youtu.be/TY6m6fS8bxU)
 - [Which ESP32 pins are safe to use?](https://youtu.be/LY-1DHTxRAk)
 - [ESP32 Pins.xlsx](https://drive.google.com/file/d/1gbKM7DA7PI7s1-ne_VomcjOrb0bE2TPZ/view)
-  
